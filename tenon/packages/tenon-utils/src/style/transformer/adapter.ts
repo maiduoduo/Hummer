@@ -15,6 +15,7 @@ export function transformAdapter(style:Record<string, string>, view:any){
   tempStyle = hackForBorderRadius(view, style);
   tempStyle = hackForDefaultFlex(tempStyle);
   tempStyle = hackForWhiteSpace(tempStyle);
+  tempStyle = transformDisplay(tempStyle);
   return tempStyle
 }
 
@@ -83,4 +84,14 @@ function getBorderRadius(value:string, {width,unit}:any){
     return (width * parseFloat(bPercent) / 100).toFixed(2) + unit
   }
   return value
+}
+
+function transformDisplay(style:Record<string, string>){
+  let display = style["display"]
+  if(display == "none" || display == "flex"){
+    return style
+  }else {
+    style["display"] = "flex";
+  }
+  return style
 }
